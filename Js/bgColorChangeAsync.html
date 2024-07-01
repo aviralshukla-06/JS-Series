@@ -34,12 +34,15 @@
 
 
         startBtn.addEventListener('click', function (){
-           initializing = setInterval(startChange, 1000, "Aviral");
+           if(!initializing){
+               initializing = setInterval(startChange, 1000, "Aviral");
+           }
 
         });
 
         stopBtn.addEventListener('click', function(){
             clearInterval(initializing);
+            initializing = null;
         });
 
             
