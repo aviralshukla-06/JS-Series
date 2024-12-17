@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    
+    <input id="a" type="text" placeholder="Enter first value">
+    <input id="b" type="text" placeholder="Enter second value">
+
+    <button onclick="calculateSum()">Get Sum</button>
+
+    <span id="displaySum"></span>
+
+    <script>
+
+        async function calculateSum() {
+            const a = document.getElementById("a").value;
+            const b = document.getElementById("b").value;
+
+            const resVal = await axios.post("http://localhost:3000/add",{
+                a:a,
+                b:b
+            })
+
+            document.getElementById("displaySum").innerText = resVal.data.result;
+            console.log(resVal);
+
+
+        }
+
+        // async function calculateSum() {
+        //     const a = document.getElementById("a").value;
+        //     const b = document.getElementById("b").value;
+
+        //     const resultVal = await fetch("http://localhost:3000/add", {
+        //         method: "POST",
+        //         headers: {
+        //         "Content-Type": "application/json",
+        //         },
+        //         body: JSON.stringify({ a: a, b: b }),
+        //     });
+
+        //     const resData = await resultVal.json();
+        //     console.log(resData);
+        // }
+    </script>
+</body>
+</html>
