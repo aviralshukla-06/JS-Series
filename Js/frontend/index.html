@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    
+    <h2>Authentication Windows</h2>
+
+    <input id="signUp" type="text" placeholder="Enter username">
+    <input id="passKey" type="text" placeholder="Enter password">
+    <button id="signupBtn" onclick="signup()"> SignUp</button>
+
+
+    <input id="signIn" type="text" placeholder="Enter username">
+    <input id="pass" type="text" placeholder="Enter password">
+    <button id="signinBtn" onclick="login()"> Login</button>
+
+    <!-- <div class="userdata"> -->
+
+        <h3>User Information Section</h3>
+        <button id="getInfo" onclick="getInfo()">Profile</button>
+        <p id="username"></p>
+        <p id="password"></p>
+        <button id="logout"> Logout</button>
+    <!-- </div> -->
+
+    <script>
+        async function signup(){
+            const username = document.getElementById("signUp").value;
+            const password = document.getElementById("passKey").value;
+
+            const result = await axios.post("http://localhost:3000/signup",{
+                username: username,
+                password: password
+            })
+
+            console.log(result);
+        }
+
+
+        async function login() {
+            const username = document.getElementById("signUp").value;
+            const password = document.getElementById("passKey").value;
+
+            const result = await axios.post("http://localhost:3000/signin",{
+                username: username,
+                password: password
+            })
+
+            localStorage.setItem("token", result.data.token);
+            console.log(result);
+        }
+
+
+        async function getInfo() {
+            const response = await axios.get("http://localhost:3000/me",{
+                headers:{
+                    token :localStorage.getItem("token")
+                }
+            })
+ 
+            document.getElementById("username").innerText ="Username:  "+ response.data.username;
+            document.getElementById("password").innerText = "Password:  " +response.data.password;
+            // const password = document.getElementById("passKey").value; 
+        }
+
+
+    </script>
+
+
+
+</body>
+</html>
